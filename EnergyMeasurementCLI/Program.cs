@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NationalInstruments.VisaNS;
+using Ivi.Visa;
 
 namespace EnergyMeasurementCLI
 {
@@ -11,15 +11,9 @@ namespace EnergyMeasurementCLI
     {
         static void Main(string[] args)
         {
-            ResourceManager resourceManager = ResourceManager.GetLocalManager();
-            string[] resources = resourceManager.FindResources("TCPIP?*INSTR");
-            foreach (string str in resources)
-            {
-                Console.WriteLine(str);
-            }
-            TcpipSession session = new TcpipSession(resources[0]);
-            Console.WriteLine(session.Query("FETC?V,I,W\n"));
-            session.Dispose();
+            IEnumerable<string> resources = GlobalResourceManager.Find("");
+            IEnumerator<string> res = resources.GetEnumerator();
+
         }
     }
 }
