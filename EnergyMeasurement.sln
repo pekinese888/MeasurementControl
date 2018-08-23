@@ -16,6 +16,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementCLI.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementGUI.Test", "EnergyMeasurementGUI.Test\EnergyMeasurementGUI.Test.csproj", "{BAED64E8-B945-4741-95CC-2BB00AC1B71B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89BE6920-FC6B-4889-8D86-D4A23205224E}"
+	ProjectSection(SolutionItems) = preProject
+		EN_66205_UserManual_1707.pdf = EN_66205_UserManual_1707.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
