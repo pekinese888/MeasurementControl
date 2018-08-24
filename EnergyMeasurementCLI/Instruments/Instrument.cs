@@ -4,11 +4,20 @@ using System;
 
 namespace EnergyMeasurementCLI.Instruments
 {
-    public abstract class PowerMeter : IDisposable
+    public class Instrument : IDisposable
     {
-        public PowerMeter(string resourceName)
+        public Instrument(string resourceName)
         {
-            Console.WriteLine(this.GetType());
+
+            if (GlobalResourceManager.Parse(resourceName).ResourceClass == "INSTR")
+            {
+
+            }
+            else
+            {
+                throw new Exception($"Wrong Resource Class! Expected INSTR but got {GlobalResourceManager.Parse(resourceName).ResourceClass}");
+            }
+            
             if (TryToOpenSession(resourceName))
             {
                 switch (GlobalResourceManager.Parse(resourceName).InterfaceType)
@@ -39,7 +48,7 @@ namespace EnergyMeasurementCLI.Instruments
             }
         }
 
-        public PowerMeter(string resourceName, AccessModes accessModes, int timeoutMilliseconds)
+        public Instrument(string resourceName, AccessModes accessModes, int timeoutMilliseconds)
         {
             if (TryToOpenSession(resourceName))
             {
@@ -69,15 +78,6 @@ namespace EnergyMeasurementCLI.Instruments
                         throw new NotImplementedException();
                 }
             }
-        }
-
-        ~PowerMeter()
-        {
-            if (_session != null)
-            {
-                _session.Dispose();
-            }
-
         }
 
         private static bool TryToOpenSession(string resourceName)
@@ -114,11 +114,24 @@ namespace EnergyMeasurementCLI.Instruments
             }
         }
 
+        ~Instrument()
+        {
+            if (_session != null)
+            {
+                _session.Dispose();
+            }
+
+        }
+
         public void Dispose()
         {
-            _session.Dispose();
+            if (_session != null)
+            {
+                _session.Dispose();
+            }
         }
 
         protected readonly Session _session;
     }
+
 }
