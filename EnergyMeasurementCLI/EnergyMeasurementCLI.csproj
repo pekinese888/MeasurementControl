@@ -54,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chroma66205.cs" />
+    <Compile Include="Instruments\Chroma66205.cs" />
+    <Compile Include="Instruments\PowerMeter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NationalInstruments.Visa;
+﻿using NationalInstruments.Visa;
 using Ivi.Visa;
+using System;
 
-namespace EnergyMeasurementCLI
+namespace EnergyMeasurementCLI.Instruments
 {
-    public class Chroma66205
+    public abstract class PowerMeter : IDisposable
     {
-        public Chroma66205(string resourceName)
+        public PowerMeter(string resourceName)
         {
-
+            Console.WriteLine(this.GetType());
             if (TryToOpenSession(resourceName))
             {
                 switch (GlobalResourceManager.Parse(resourceName).InterfaceType)
@@ -40,46 +36,48 @@ namespace EnergyMeasurementCLI
                     default:
                         throw new NotImplementedException();
                 }
-            } 
-        }
-
-        public Chroma66205(string resourceName, AccessModes accessModes, int timeoutMilliseconds)
-        {
-            GlobalResourceManager.Open(resourceName).Dispose();
-            switch (GlobalResourceManager.Parse(resourceName).InterfaceType)
-            {
-                case HardwareInterfaceType.Custom:
-                    throw new NotImplementedException();
-                case HardwareInterfaceType.Gpib:
-                    this._session = new GpibSession(resourceName, accessModes, timeoutMilliseconds);
-                    break;
-                case HardwareInterfaceType.Vxi:
-                    throw new NotImplementedException();
-                case HardwareInterfaceType.GpibVxi:
-                    throw new NotImplementedException();
-                case HardwareInterfaceType.Serial:
-                    this._session = new SerialSession(resourceName, accessModes, timeoutMilliseconds);
-                    break;
-                case HardwareInterfaceType.Pxi:
-                    throw new NotImplementedException();
-                case HardwareInterfaceType.Tcp:
-                    this._session = new TcpipSession(resourceName, accessModes, timeoutMilliseconds);
-                    break;
-                case HardwareInterfaceType.Usb:
-                    this._session = new UsbSession(resourceName, accessModes, timeoutMilliseconds);
-                    break;
-                default:
-                    throw new NotImplementedException();
             }
         }
 
-        ~Chroma66205()
+        public PowerMeter(string resourceName, AccessModes accessModes, int timeoutMilliseconds)
+        {
+            if (TryToOpenSession(resourceName))
+            {
+                switch (GlobalResourceManager.Parse(resourceName).InterfaceType)
+                {
+                    case HardwareInterfaceType.Custom:
+                        throw new NotImplementedException();
+                    case HardwareInterfaceType.Gpib:
+                        this._session = new GpibSession(resourceName, accessModes, timeoutMilliseconds);
+                        break;
+                    case HardwareInterfaceType.Vxi:
+                        throw new NotImplementedException();
+                    case HardwareInterfaceType.GpibVxi:
+                        throw new NotImplementedException();
+                    case HardwareInterfaceType.Serial:
+                        this._session = new SerialSession(resourceName, accessModes, timeoutMilliseconds);
+                        break;
+                    case HardwareInterfaceType.Pxi:
+                        throw new NotImplementedException();
+                    case HardwareInterfaceType.Tcp:
+                        this._session = new TcpipSession(resourceName, accessModes, timeoutMilliseconds);
+                        break;
+                    case HardwareInterfaceType.Usb:
+                        this._session = new UsbSession(resourceName, accessModes, timeoutMilliseconds);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        ~PowerMeter()
         {
             if (_session != null)
             {
                 _session.Dispose();
             }
-            
+
         }
 
         private static bool TryToOpenSession(string resourceName)
@@ -116,11 +114,11 @@ namespace EnergyMeasurementCLI
             }
         }
 
-        public void ClearStatusByteRegister()
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            _session.Dispose();
         }
 
-        private MessageBasedSession _session;
+        protected readonly Session _session;
     }
 }
