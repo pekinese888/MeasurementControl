@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EnergyMeasurementCLI.Test
+namespace MeasurementControlCLI.Test
 {
     [TestClass]
     public class UnitTest1

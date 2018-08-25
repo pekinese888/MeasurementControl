@@ -5,16 +5,16 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnergyMeasurement", "EnergyMeasurement\EnergyMeasurement.vcxproj", "{A7987087-00C3-43E8-9259-534B102DBCF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementCLI", "EnergyMeasurementCLI\EnergyMeasurementCLI.csproj", "{30968E11-E10A-47EC-828B-71EABDD8557B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI", "EnergyMeasurementCLI\MeasurementControlCLI.csproj", "{30968E11-E10A-47EC-828B-71EABDD8557B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementGUI", "EnergyMeasurementGUI\EnergyMeasurementGUI.csproj", "{36937184-DCAF-4BCC-B8C4-6BCCF137C804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI", "EnergyMeasurementGUI\MeasurementControlGUI.csproj", "{36937184-DCAF-4BCC-B8C4-6BCCF137C804}"
 	ProjectSection(ProjectDependencies) = postProject
 		{30968E11-E10A-47EC-828B-71EABDD8557B} = {30968E11-E10A-47EC-828B-71EABDD8557B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementCLI.Test", "EnergyMeasurementCLI.Test\EnergyMeasurementCLI.Test.csproj", "{B21EB427-056F-41C5-817F-0418023C068D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI.Test", "EnergyMeasurementCLI.Test\MeasurementControlCLI.Test.csproj", "{B21EB427-056F-41C5-817F-0418023C068D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMeasurementGUI.Test", "EnergyMeasurementGUI.Test\EnergyMeasurementGUI.Test.csproj", "{BAED64E8-B945-4741-95CC-2BB00AC1B71B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI.Test", "EnergyMeasurementGUI.Test\MeasurementControlGUI.Test.csproj", "{BAED64E8-B945-4741-95CC-2BB00AC1B71B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89BE6920-FC6B-4889-8D86-D4A23205224E}"
 	ProjectSection(SolutionItems) = preProject

@@ -2,7 +2,7 @@
 using Ivi.Visa;
 using System;
 
-namespace EnergyMeasurementCLI.Instruments
+namespace MeasurementControlCLI.Instruments
 {
     public abstract class PowerMeter : Instrument
     {

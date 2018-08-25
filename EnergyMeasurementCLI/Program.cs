@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using NationalInstruments.Visa;
 using Ivi.Visa;
-using EnergyMeasurementCLI.Instruments;
+using MeasurementControlCLI.Instruments;
 
-namespace EnergyMeasurementCLI
+namespace MeasurementControlCLI
 {
     class Program
     {
@@ -40,9 +40,6 @@ namespace EnergyMeasurementCLI
 
             using (Chroma66205 chroma66205 = new Chroma66205("TCPIP0::192.168.1.7::inst0::INSTR"))
             {
-                chroma66205._session.FormattedIO.WriteLine("SYST:HEAD ON");
-                chroma66205._session.FormattedIO.WriteLine("FETC?V,I,W");
-                Console.WriteLine(chroma66205._session.FormattedIO.ReadLine());
                 chroma66205.Measure(
                     Chroma66205.MeasurementParameters.W,
                     Chroma66205.MeasurementParameters.V,

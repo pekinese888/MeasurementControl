@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NationalInstruments.Visa;
 using Ivi.Visa;
 
-namespace EnergyMeasurementCLI.Instruments
+namespace MeasurementControlCLI.Instruments
 {
     public sealed class Chroma66205 : PowerMeter
     {
