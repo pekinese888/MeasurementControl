@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B21EB427-056F-41C5-817F-0418023C068D}</ProjectGuid>
+    <ProjectGuid>{BAED64E8-B945-4741-95CC-2BB00AC1B71B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EnergyMeasurementCLI.Test</RootNamespace>
-    <AssemblyName>EnergyMeasurementCLI.Test</AssemblyName>
+    <RootNamespace>EnergyMeasurementGUI.Test</RootNamespace>
+    <AssemblyName>EnergyMeasurementGUI.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EnergyMeasurementCLI\MeasurementControlCLI.csproj">
-      <Project>{30968e11-e10a-47ec-828b-71eabdd8557b}</Project>
-      <Name>MeasurementControlCLI</Name>
+    <ProjectReference Include="..\MeasurementControlGUI\MeasurementControlGUI.csproj">
+      <Project>{36937184-dcaf-4bcc-b8c4-6bccf137c804}</Project>
+      <Name>MeasurementControlGUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

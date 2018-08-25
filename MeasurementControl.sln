@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnergyMeasurement", "EnergyMeasurement\EnergyMeasurement.vcxproj", "{A7987087-00C3-43E8-9259-534B102DBCF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnergyMeasurement", "MeasurementControl\EnergyMeasurement.vcxproj", "{A7987087-00C3-43E8-9259-534B102DBCF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI", "EnergyMeasurementCLI\MeasurementControlCLI.csproj", "{30968E11-E10A-47EC-828B-71EABDD8557B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI", "MeasurementControlCLI\MeasurementControlCLI.csproj", "{30968E11-E10A-47EC-828B-71EABDD8557B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI", "EnergyMeasurementGUI\MeasurementControlGUI.csproj", "{36937184-DCAF-4BCC-B8C4-6BCCF137C804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI.Test", "MeasurementControlCLI.Test\MeasurementControlCLI.Test.csproj", "{B21EB427-056F-41C5-817F-0418023C068D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI", "MeasurementControlGUI\MeasurementControlGUI.csproj", "{36937184-DCAF-4BCC-B8C4-6BCCF137C804}"
 	ProjectSection(ProjectDependencies) = postProject
 		{30968E11-E10A-47EC-828B-71EABDD8557B} = {30968E11-E10A-47EC-828B-71EABDD8557B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlCLI.Test", "EnergyMeasurementCLI.Test\MeasurementControlCLI.Test.csproj", "{B21EB427-056F-41C5-817F-0418023C068D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI.Test", "MeasurementControlGUI.Test\MeasurementControlGUI.Test.csproj", "{BAED64E8-B945-4741-95CC-2BB00AC1B71B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementControlGUI.Test", "EnergyMeasurementGUI.Test\MeasurementControlGUI.Test.csproj", "{BAED64E8-B945-4741-95CC-2BB00AC1B71B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89BE6920-FC6B-4889-8D86-D4A23205224E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{23F135C4-DF1F-4FEB-ABF2-23EBB64CDB34}"
 	ProjectSection(SolutionItems) = preProject
 		EN_66205_UserManual_1707.pdf = EN_66205_UserManual_1707.pdf
 		NINETVisa.chm = NINETVisa.chm
@@ -36,7 +36,6 @@ Global
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Debug|x64.ActiveCfg = Debug|x64
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Debug|x64.Build.0 = Debug|x64
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Debug|x86.ActiveCfg = Debug|Win32
-		{A7987087-00C3-43E8-9259-534B102DBCF8}.Debug|x86.Build.0 = Debug|Win32
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Release|Any CPU.ActiveCfg = Release|Win32
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Release|x64.ActiveCfg = Release|x64
 		{A7987087-00C3-43E8-9259-534B102DBCF8}.Release|x64.Build.0 = Release|x64
@@ -54,18 +53,6 @@ Global
 		{30968E11-E10A-47EC-828B-71EABDD8557B}.Release|x64.Build.0 = Release|Any CPU
 		{30968E11-E10A-47EC-828B-71EABDD8557B}.Release|x86.ActiveCfg = Release|Any CPU
 		{30968E11-E10A-47EC-828B-71EABDD8557B}.Release|x86.Build.0 = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x64.Build.0 = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x86.Build.0 = Debug|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x64.ActiveCfg = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x64.Build.0 = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x86.ActiveCfg = Release|Any CPU
-		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x86.Build.0 = Release|Any CPU
 		{B21EB427-056F-41C5-817F-0418023C068D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B21EB427-056F-41C5-817F-0418023C068D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21EB427-056F-41C5-817F-0418023C068D}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -78,6 +65,18 @@ Global
 		{B21EB427-056F-41C5-817F-0418023C068D}.Release|x64.Build.0 = Release|Any CPU
 		{B21EB427-056F-41C5-817F-0418023C068D}.Release|x86.ActiveCfg = Release|Any CPU
 		{B21EB427-056F-41C5-817F-0418023C068D}.Release|x86.Build.0 = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x64.Build.0 = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Debug|x86.Build.0 = Debug|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x64.ActiveCfg = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x64.Build.0 = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x86.ActiveCfg = Release|Any CPU
+		{36937184-DCAF-4BCC-B8C4-6BCCF137C804}.Release|x86.Build.0 = Release|Any CPU
 		{BAED64E8-B945-4741-95CC-2BB00AC1B71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BAED64E8-B945-4741-95CC-2BB00AC1B71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAED64E8-B945-4741-95CC-2BB00AC1B71B}.Debug|x64.ActiveCfg = Debug|Any CPU
