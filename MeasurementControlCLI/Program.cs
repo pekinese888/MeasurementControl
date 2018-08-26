@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NationalInstruments.Visa;
 using Ivi.Visa;
+using MeasurementControlCLI.Instruments;
 using MeasurementControlCLI.Instruments.PowerMeters;
 
 namespace MeasurementControlCLI
@@ -36,16 +37,7 @@ namespace MeasurementControlCLI
                 }
             }
             */
-
-            using (Instruments.Instrument chroma66205 = new Chroma66205("TCPIP0::192.168.1.7::inst0::GEN"))
-            {
-                chroma66205.Measure(
-                    Chroma66205.MeasurementParameter.W,
-                    Chroma66205.MeasurementParameter.V,
-                    Chroma66205.MeasurementParameter.I,
-                    Chroma66205.MeasurementParameter.THDV);
-            }
-
+            
         }
     }
 }

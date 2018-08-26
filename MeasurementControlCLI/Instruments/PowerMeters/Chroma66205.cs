@@ -78,12 +78,14 @@ namespace MeasurementControlCLI.Instruments.PowerMeters
             }
         }
 
-        public Dictionary<string, double> Measure(params PowerMeter.MeasurementParameter[] measurementParameters)
+  
+
+        public void ClearStatusByteRegister()
         {
             throw new NotImplementedException();
         }
 
-        public void ClearStatusByteRegister()
+        public override Dictionary<string, double> Measure(params PowerMeter.MeasurementParameter[] measurementParameters)
         {
             throw new NotImplementedException();
         }

@@ -1,13 +1,15 @@
 ﻿using NationalInstruments.Visa;
 using Ivi.Visa;
 using System;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace MeasurementControlCLI.Instruments
 {
     /// <summary>
     /// General Class for all Instruments
     /// </summary>
-    public class Instrument : IDisposable
+    public abstract class Instrument : IDisposable
     {
         public Instrument(string resourceName)
         {
@@ -148,12 +150,30 @@ namespace MeasurementControlCLI.Instruments
             }
         }
 
-        public abstract class MeasurementParameter
+        /// <summary>
+        /// Measurement Parameters for ALL Instruments
+        /// </summary>
+        public class MeasurementParameter
         {
             public new string ToString { get; protected set; }
             public string Description { get; protected set; }
 
             protected MeasurementParameter(string toString, string description)
+            {
+                ToString = toString;
+                Description = description;
+            }
+        }
+
+        /// <summary>
+        /// Generation Parameters for ALL Instruments
+        /// </summary>
+        public abstract class GenerationParameter
+        {
+            public new string ToString { get; protected set; }
+            public string Description { get; protected set; }
+
+            protected GenerationParameter(string toString, string description)
             {
                 ToString = toString;
                 Description = description;

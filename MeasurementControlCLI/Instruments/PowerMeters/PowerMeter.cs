@@ -1,6 +1,7 @@
 ﻿using NationalInstruments.Visa;
 using Ivi.Visa;
 using System;
+using System.Collections.Generic;
 
 namespace MeasurementControlCLI.Instruments.PowerMeters
 {
@@ -19,6 +20,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters
 
         protected abstract bool IsCorrectInstrument();
 
+        public abstract Dictionary<string, double> Measure(params PowerMeter.MeasurementParameter[] measurementParameters);
         /// <summary>
         /// Measurement Parameters unique to Power Meters
         /// </summary>
