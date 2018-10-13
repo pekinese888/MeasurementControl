@@ -11,10 +11,14 @@ namespace MeasurementControlCLI.Instruments
     /// </summary>
     public abstract class Instrument : IDisposable
     {
+        /// <summary>
+        /// Constructor, opening a Session to the given NI-Visa Instrument.
+        /// </summary>
+        /// <param name="resourceName">The Visa Resource Name</param>
         public Instrument(string resourceName)
         {
 
-            if (CheckResourceCLass(resourceName))
+            if (ResourceClassIsInstrument(resourceName))
             {
                 if (TryToOpenSession(resourceName))
                 {
@@ -46,7 +50,7 @@ namespace MeasurementControlCLI.Instruments
                 }
                 else
                 {
-                    throw new CannotConnectInstrumentException($"Unable to Open Session with Instrument!");
+                    throw new Instruments.Exceptions.CannotConnectInstrumentException($"Unable to Open Session with Instrument!");
                 }
             }
             else
@@ -55,10 +59,18 @@ namespace MeasurementControlCLI.Instruments
             }
         }
 
+        /// <summary>
+        /// Constructor, opening a Session to the given NI-Visa Instrument.
+        /// </summary>
+        /// <param name="resourceName">The Visa Resource Name</param>
+        /// <param name="accessModes">The modes by which the resource is to be accessed.</param>
+        /// <param name="timeoutMilliseconds">The timeout in milliseconds. 
+        /// This applies to the time taken to acquire the requested lock, 
+        /// and may also include the time needed to open a session to the resource.</param>
         public Instrument(string resourceName, AccessModes accessModes, int timeoutMilliseconds)
         {
 
-            if (CheckResourceCLass(resourceName))
+            if (ResourceClassIsInstrument(resourceName))
             {
                 if (TryToOpenSession(resourceName))
                 {
@@ -90,7 +102,7 @@ namespace MeasurementControlCLI.Instruments
                 }
                 else
                 {
-                    throw new CannotConnectInstrumentException($"Unable to Open Session with Instrument!");
+                    throw new Instruments.Exceptions.CannotConnectInstrumentException($"Unable to Open Session with Instrument!");
                 }
             }
             else
@@ -99,7 +111,12 @@ namespace MeasurementControlCLI.Instruments
             }
         }
 
-        private static bool CheckResourceCLass(string resourceName)
+        /// <summary>
+        /// Method to Check if the Visa Resource Name belongs to an Instrument
+        /// </summary>
+        /// <param name="resourceName">The Visa Resource Name</param>
+        /// <returns>True if Resource Class in an Instrument, False Otherwise</returns>
+        private static bool ResourceClassIsInstrument(string resourceName)
         {
             try
             {
@@ -112,6 +129,11 @@ namespace MeasurementControlCLI.Instruments
             return false;
         }
 
+        /// <summary>
+        /// Tries if Session is able to be opened
+        /// </summary>
+        /// <param name="resourceName">The Visa Resource Name</param>
+        /// <returns>True if session can be opened</returns>
         private static bool TryToOpenSession(string resourceName)
         {
             ResourceOpenStatus status;
@@ -133,15 +155,18 @@ namespace MeasurementControlCLI.Instruments
             }
         }
 
+        /// <summary>
+        /// Instrument Destructor, making sure the Session gets Disposed if the Instrument Object gets destroyed
+        /// </summary>
         ~Instrument()
         {
-            if (_session != null)
-            {
-                _session.Dispose();
-            }
+            this.Dispose();
 
         }
 
+        /// <summary>
+        /// Implements iDisposable 
+        /// </summary>
         public void Dispose()
         {
             if (_session != null)
@@ -150,73 +175,8 @@ namespace MeasurementControlCLI.Instruments
             }
         }
 
-        /// <summary>
-        /// Measurement Parameters for ALL Instruments
-        /// </summary>
-        public class MeasurementParameter
-        {
-            public new string ToString { get; protected set; }
-            public string Description { get; protected set; }
-
-            protected MeasurementParameter(string toString, string description)
-            {
-                ToString = toString;
-                Description = description;
-            }
-        }
-
-        /// <summary>
-        /// Generation Parameters for ALL Instruments
-        /// </summary>
-        public abstract class GenerationParameter
-        {
-            public new string ToString { get; protected set; }
-            public string Description { get; protected set; }
-
-            protected GenerationParameter(string toString, string description)
-            {
-                ToString = toString;
-                Description = description;
-            }
-        }
-
         protected readonly Session _session;
     }
-}
-
-
-[Serializable]
-public class CannotConnectInstrumentException : Exception
-{
-    public CannotConnectInstrumentException() { }
-    public CannotConnectInstrumentException(string message) : base(message) { }
-    public CannotConnectInstrumentException(string message, Exception inner) : base(message, inner) { }
-    protected CannotConnectInstrumentException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-}
-
-[Serializable]
-public class CommunicationException : Exception
-{
-    public CommunicationException() { }
-    public CommunicationException(string message) : base(message) { }
-    public CommunicationException(string message, Exception inner) : base(message, inner) { }
-    protected CommunicationException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-}
-
-
-[Serializable]
-public class WrongInstrumentException : Exception
-{
-    public WrongInstrumentException() { }
-    public WrongInstrumentException(string message) : base(message) { }
-    public WrongInstrumentException(string message, Exception inner) : base(message, inner) { }
-    protected WrongInstrumentException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
 
 

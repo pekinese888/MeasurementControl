@@ -18,28 +18,25 @@ namespace MeasurementControlCLI.Instruments.PowerMeters
         {
         }
 
+
+        /// <summary>
+        /// Checks 
+        /// </summary>
+        /// <returns>Returns True if the VISA Session Points to the correct Instrument</returns>
         protected abstract bool IsCorrectInstrument();
 
-        public abstract Dictionary<string, double> Measure(params PowerMeter.MeasurementParameter[] measurementParameters);
         /// <summary>
-        /// Measurement Parameters unique to Power Meters
+        /// This command lets the user get measurement data from the Power Meter. Measure triggers the acquisition of new data before returning data.
         /// </summary>
-        public new class MeasurementParameter : Instrument.MeasurementParameter
-        {
-            /// <summary>
-            /// RMS Voltage
-            /// </summary>
-            public static readonly MeasurementParameter V = new MeasurementParameter("V", "RMS Voltage");
-            /// <summary>
-            /// RMS Current
-            /// </summary>
-            public static readonly MeasurementParameter I = new MeasurementParameter("I", "RMS Current");
-            /// <summary>
-            /// Active Power
-            /// </summary>
-            public static readonly MeasurementParameter W = new MeasurementParameter("W", "Active Power");
+        /// <param name="measurementParameters">Paremeters to be measured.</param>
+        /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
+        public abstract Dictionary<string, double> Measure(params MeasurementParameter[] measurementParameters);
 
-            protected MeasurementParameter(string toString, string description):base(toString,description){}
-        }
+        /// <summary>
+        /// This command lets the user get measurement data from the Power Meter. Fetch returns the previously acquired data from the measurement buffer.
+        /// </summary>
+        /// <param name="measurementParameters">Paremeters to be measured.</param>
+        /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
+        public abstract Dictionary<string, double> Fetch(params MeasurementParameter[] measurementParameters);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NationalInstruments.Visa;
 using Ivi.Visa;
 using MeasurementControlCLI.Instruments;
-using MeasurementControlCLI.Instruments.PowerMeters;
+using MeasurementControlCLI.Instruments.PowerMeters.Chroma66205;
 
 namespace MeasurementControlCLI
 {
@@ -37,7 +37,9 @@ namespace MeasurementControlCLI
                 }
             }
             */
-            
+            Chroma66205 chroma66205 = new Chroma66205("TCPIP0::192.168.1.7::inst0::INSTR");
+
+            chroma66205.Configuration.System.Header.Value = Chroma66205._Configuration._System._Header.AllowedValue.ON;
         }
     }
 }
