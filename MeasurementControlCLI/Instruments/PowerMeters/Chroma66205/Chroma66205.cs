@@ -23,6 +23,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             if (IsCorrectInstrument())
             {
                 _session = (MessageBasedSession)base._session;
+                Initialize();
             }
             else
             {
@@ -44,6 +45,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             if (IsCorrectInstrument())
             {
                 _session = (MessageBasedSession)base._session;
+                Initialize();
             }
             else
             {
@@ -80,11 +82,23 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         }
 
         /// <summary>
+        /// Initialize the Chroma to Factory Defaults, set Transmit and Termination Characters.
+        /// </summary>
+        private void Initialize()
+        {
+            Reset();
+            this.Configuration.RestoreConfig(Chroma66205._Configuration.ConfigurationStoreValue.FactoryDefaults);
+            this.Configuration.System.TransmitSeperator.Value = Chroma66205._Configuration._System._TransmitSeperator.AllowedValue.Comma;
+            this.Configuration.System.TransmitTerminator.Value = Chroma66205._Configuration._System._TransmitTerminator.AllowedValue.LineFeed;
+        }
+
+        /// <summary>
         /// This command performs device initial setting.
         /// </summary>
-        public void Reset()
+        private void Reset()
         {
-            throw new NotImplementedException();
+            _session.FormattedIO.Write("*RST" + this.Configuration.System.TransmitTerminator.Value.ToString());
+            _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
         }
 
         /// <summary>
@@ -100,9 +114,31 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         /// <param name="measurementParameters">Paremeters to be measured.</param>
         /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
-        public override Dictionary<string, double> Measure(params PowerMeters.MeasurementParameter[] measurementParameters)
+        public override Dictionary<PowerMeters.MeasurementParameter, double> Measure(params PowerMeters.MeasurementParameter[] measurementParameters)
         {
-            throw new NotImplementedException();
+            Dictionary<PowerMeters.MeasurementParameter, double> measurements = new Dictionary<PowerMeters.MeasurementParameter, double>();
+            string message = "MEAS?";
+            double[] values;
+
+
+            foreach (PowerMeters.MeasurementParameter parameter in measurementParameters)
+            {
+                message = message + parameter.ToString + this.Configuration.System.TransmitSeperator.ToString();
+            }
+
+            _session.FormattedIO.Write(message + this.Configuration.System.TransmitTerminator.Value.ToString());
+            _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
+
+            values = _session.FormattedIO.ReadListOfDouble(measurementParameters.Length);
+
+            int i = 0;
+            foreach (PowerMeters.MeasurementParameter parameter in measurementParameters)
+            {
+                measurements.Add(parameter, values[i]);
+                i++;
+            }
+
+            return measurements;
         }
 
         /// <summary>
@@ -110,15 +146,37 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         /// <param name="measurementParameters">Paremeters to be measured.</param>
         /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
-        public override Dictionary<string, double> Fetch(params PowerMeters.MeasurementParameter[] measurementParameters)
+        public override Dictionary<PowerMeters.MeasurementParameter, double> Fetch(params PowerMeters.MeasurementParameter[] measurementParameters)
         {
-            throw new NotImplementedException();
+            Dictionary<PowerMeters.MeasurementParameter, double> measurements = new Dictionary<PowerMeters.MeasurementParameter, double>();
+            string message = "FETC?";
+            double[] values;
+
+
+            foreach (PowerMeters.MeasurementParameter parameter in measurementParameters)
+            {
+                message = message + parameter.ToString + this.Configuration.System.TransmitSeperator.ToString();
+            }
+
+            _session.FormattedIO.Write(message + this.Configuration.System.TransmitTerminator.Value.ToString());
+            _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
+
+            values = _session.FormattedIO.ReadListOfDouble(measurementParameters.Length);
+
+            int i = 0;
+            foreach (PowerMeters.MeasurementParameter parameter in measurementParameters)
+            {
+                measurements.Add(parameter, values[i]);
+                i++;
+            }
+
+            return measurements;
         }
 
         /// <summary>
         /// Contains all Configuration Settings of the Chroma 66205
         /// </summary>
-        public class _Configuration
+        private class _Configuration
         {
             /// <summary>
             /// This command stores the present state of the configuration in a specific memory location.
@@ -292,7 +350,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     /// Actual Value of the Propertie.
                     /// </summary>
                     protected AllowedValue _Value = null;
-                    protected AllowedValue Value
+                    public AllowedValue Value
                     {
                         get
                         {
@@ -301,6 +359,23 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                         set
                         {
                             throw new NotImplementedException();
+                        }
+                    }
+
+                    /// <summary>
+                    /// Converts the AllowedValue of the TransmitSeperator to it´s respective String representation
+                    /// </summary>
+                    /// <returns>For Comma = "," for Semicolon = ";"</returns>
+                    public new string ToString()
+                    {
+                        switch (this.Value.ToString())
+                        {
+                            case "0":
+                                return ",";
+                            case "1":
+                                return ";";
+                            default:
+                                throw new ArgumentOutOfRangeException();
                         }
                     }
 
@@ -354,6 +429,23 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     }
 
                     /// <summary>
+                    /// Converts the AllowedValue of the TransmitTerminator to it´s respective String representation
+                    /// </summary>
+                    /// <returns>For LineFeed = "\n" for LF+CR = "\n\r"</returns>
+                    public new string ToString()
+                    {
+                        switch (this.Value.ToString())
+                        {
+                            case "0":
+                                return "\n";
+                            case "1":
+                                return "\n\r";
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+
+                    /// <summary>
                     /// Allowed values for the Propertie.
                     /// </summary>
                     public class AllowedValue
@@ -384,7 +476,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                 /// <summary>
                 /// THis command sets the Power Meter in Local State and the Front Panel will work.
                 /// </summary>
-                public static void SetLocal()
+                public void SetLocal()
                 {
                     throw new NotImplementedException();
                 }
@@ -392,7 +484,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                 /// <summary>
                 /// THis command sets the Power Meter in Remote State and the Front Panel will be disabled except for the SETUP Key pressed.
                 /// </summary>
-                public static void SetRemote()
+                public void SetRemote()
                 {
                     throw new NotImplementedException();
                 }
@@ -400,7 +492,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             }
             public _System System { get; }
         }
-        public _Configuration Configuration { get; }
+        private _Configuration Configuration { get; }
 
         /// <summary>
         /// Contains all Status Informations of the Chroma 66205
@@ -445,6 +537,6 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// <summary>
         /// Internal representation of the Messagebased Visa Session
         /// </summary>
-        public new MessageBasedSession _session;
+        private new MessageBasedSession _session;
     }
 }

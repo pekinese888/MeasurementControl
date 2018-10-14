@@ -30,13 +30,13 @@ namespace MeasurementControlCLI.Instruments.PowerMeters
         /// </summary>
         /// <param name="measurementParameters">Paremeters to be measured.</param>
         /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
-        public abstract Dictionary<string, double> Measure(params MeasurementParameter[] measurementParameters);
+        public abstract Dictionary<PowerMeters.MeasurementParameter, double> Measure(params MeasurementParameter[] measurementParameters);
 
         /// <summary>
         /// This command lets the user get measurement data from the Power Meter. Fetch returns the previously acquired data from the measurement buffer.
         /// </summary>
         /// <param name="measurementParameters">Paremeters to be measured.</param>
         /// <returns>Dictionary which contains PowerMeter.MeasurementParameter as Key Value and the actual measurement value as value pair.</returns>
-        public abstract Dictionary<string, double> Fetch(params MeasurementParameter[] measurementParameters);
+        public abstract Dictionary<PowerMeters.MeasurementParameter, double> Fetch(params MeasurementParameter[] measurementParameters);
     }
 }
