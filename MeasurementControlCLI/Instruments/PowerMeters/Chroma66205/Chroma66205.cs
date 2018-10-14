@@ -318,7 +318,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     /// </summary>
                     public class AllowedValue
                     {
-                        private string _value;
+                        private readonly string _value;
 
                         public new string ToString()
                         {
@@ -384,7 +384,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     /// </summary>
                     public class AllowedValue
                     {
-                        private string _value;
+                        private readonly string _value;
 
                         public new string ToString()
                         {
@@ -450,7 +450,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     /// </summary>
                     public class AllowedValue
                     {
-                        private string _value;
+                        private readonly string _value;
 
                         public new string ToString()
                         {
