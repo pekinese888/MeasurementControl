@@ -20,6 +20,9 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// <param name="resourceName">String that describes a unique VISA resource.</param>
         public Chroma66205(string resourceName) : base(resourceName)
         {
+            Configuration = new _Configuration(this);
+            Status = new _Status(this);
+            
             if (IsCorrectInstrument())
             {
                 _session = (MessageBasedSession)base._session;
@@ -42,6 +45,9 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </param>
         public Chroma66205(string resourceName, AccessModes accessModes, int timeoutMilliseconds) : base(resourceName, accessModes, timeoutMilliseconds)
         {
+            Configuration = new _Configuration(this);
+            Status = new _Status(this);
+
             if (IsCorrectInstrument())
             {
                 _session = (MessageBasedSession)base._session;
@@ -84,7 +90,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// <summary>
         /// Initialize the Chroma to Factory Defaults, set Transmit and Termination Characters.
         /// </summary>
-        private void Initialize()
+        public void Initialize()
         {
             Reset();
             this.Configuration.RestoreConfig(Chroma66205._Configuration.ConfigurationStoreValue.FactoryDefaults);
@@ -97,8 +103,31 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         private void Reset()
         {
-            _session.FormattedIO.Write("*RST" + this.Configuration.System.TransmitTerminator.Value.ToString());
+            SendCommand("*RST", true);
+        }
+
+        /// <summary>
+        /// Sends Command to the Chroma66205 and provides the Response as String and Clears the ReadBuffer if readResponse is true
+        /// </summary>
+        /// <param name="command">Command to be sent to the Chroma66205. Refer to Chroma66205 Manual for more information</param>
+        /// <param name="readResponse">If true, the Response is provided as String and the ReadBuffer is cleared. If false, the return will be null and ReadBuffer will be untouched.</param>
+        /// <returns></returns>
+        private string SendCommand(string command, bool readResponse)
+        {
+            _session.FormattedIO.Write(command + this.Configuration.System.TransmitTerminator.Value.ToString());
             _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
+
+            if (readResponse)
+            {
+                string response = _session.FormattedIO.ReadLine();
+                _session.FormattedIO.DiscardBuffers();
+                return response;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         /// <summary>
@@ -106,7 +135,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         public int RunSelfTest()
         {
-            throw new NotImplementedException();
+            return Convert.ToInt32(SendCommand("TST?", true));
         }
 
         /// <summary>
@@ -123,11 +152,12 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
 
             foreach (PowerMeters.MeasurementParameter parameter in measurementParameters)
             {
-                message = message + parameter.ToString + this.Configuration.System.TransmitSeperator.ToString();
+                message = message + parameter.ToString + this.Configuration.System.TransmitSeperator.Value.ToString();
             }
 
-            _session.FormattedIO.Write(message + this.Configuration.System.TransmitTerminator.Value.ToString());
-            _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
+            message = message + this.Configuration.System.TransmitTerminator.Value.ToString();
+
+            SendCommand(message, false);
 
             values = _session.FormattedIO.ReadListOfDouble(measurementParameters.Length);
 
@@ -158,8 +188,9 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                 message = message + parameter.ToString + this.Configuration.System.TransmitSeperator.ToString();
             }
 
-            _session.FormattedIO.Write(message + this.Configuration.System.TransmitTerminator.Value.ToString());
-            _session.FormattedIO.FlushWrite(_session.SendEndEnabled);
+            message = message + this.Configuration.System.TransmitTerminator.Value.ToString();
+
+            SendCommand(message, false);
 
             values = _session.FormattedIO.ReadListOfDouble(measurementParameters.Length);
 
@@ -178,12 +209,20 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         private class _Configuration
         {
+            private Chroma66205 _chroma66205;
+
+            public _Configuration(Chroma66205 chroma66205)
+            {
+                _chroma66205 = chroma66205;
+                System = new _System(this);
+            }
+
             /// <summary>
             /// This command stores the present state of the configuration in a specific memory location.
             /// </summary>
             public void SaveConfig(ConfigurationStoreValue config)
             {
-                throw new NotImplementedException();
+                if(config > 0) _chroma66205.SendCommand($"*SAV {config}", true);
             }
 
             /// <summary>
@@ -191,7 +230,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             /// </summary>
             public void RestoreConfig(ConfigurationStoreValue config)
             {
-                throw new NotImplementedException();
+                _chroma66205.SendCommand($"*RCL {config}", true);
             }
 
             /// <summary>
@@ -213,88 +252,30 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             }
 
             /// <summary>
-            /// Contains all Register Based actions on the Chroma66205
-            /// </summary>
-            public class _Registers
-            {
-                /// <summary>
-                /// This command clears the status byte register and the event registers
-                /// </summary>
-                public static void ClearStatusByteRegister()
-                {
-                    throw new NotImplementedException();
-                }
-
-                /// <summary>
-                /// This Property sets the standard event status enable register. 
-                /// This command programs the Standard Event register bits. 
-                /// If one or more of the enabled events of the Standard Event register is set, the ESB of Status Byte Register is set too.
-                /// </summary>
-                public static Byte EventStatusEnableRegister
-                {
-                    get
-                    {
-                        throw new NotImplementedException();
-                    }
-                    set
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-
-                /// <summary>
-                /// This command reads out the contents of the standard event status register (SESR)
-                /// </summary>
-                public static byte EventStatusRegister
-                {
-                    get
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-
-                /// <summary>
-                /// This command sets the service request enable register (SRER).
-                /// </summary>
-                public static byte ServiceRequestEnableRegister
-                {
-                    get
-                    {
-                        throw new NotImplementedException();
-                    }
-                    set
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-
-                /// <summary>
-                /// This command queries the status byte register.
-                /// </summary>
-                public static byte StatusByteRegister
-                {
-                    get
-                    {
-                        throw new NotImplementedException();
-                    }
-                    set
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-            }
-            public _Registers Registers { get; }
-
-            /// <summary>
             /// Contains all System Config Settings of the Chroma66205
             /// </summary>
             public class _System
             {
+                private _Configuration _configuration;
+
+                public _System(_Configuration configuration)
+                {
+                    _configuration = configuration;
+                    Header = new _Header(this);
+                    TransmitSeperator = new _TransmitSeperator(this);
+                }
+
                 /// <summary>
                 /// This command turns response headers ON or OFF. The default is OFF.
                 /// </summary>
                 public class _Header
                 {
+                    private _System _system;
+
+                    public _Header(_System system)
+                    {
+                        _system = system;
+                    }
 
                     /// <summary>
                     /// Actual Value of the Propertie.
@@ -304,11 +285,37 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     {
                         get
                         {
-                            throw new NotImplementedException();
+                            if (_Value == null)
+                            {
+                                switch (_system._configuration._chroma66205.SendCommand("SYST:HEAD?", true))
+                                {
+                                    case "ON":
+                                        return AllowedValue.ON;
+                                    case "OFF":
+                                        return AllowedValue.OFF;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
+                            }
+                            else
+                            {
+                                return _Value;
+                            }
                         }
                         set
                         {
-                            throw new NotImplementedException();
+                            _system._configuration._chroma66205.SendCommand($"SYST:HEAD {value.ToString()}", true);
+                            switch (_system._configuration._chroma66205.SendCommand("SYST:HEAD?", true))
+                            {
+                                case "ON":
+                                    _Value = AllowedValue.ON;
+                                    break;
+                                case "OFF":
+                                    _Value = AllowedValue.OFF;
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
                     }
 
@@ -346,6 +353,13 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                 /// </summary>
                 public class _TransmitSeperator
                 {
+                    private _System _system;
+
+                    public _TransmitSeperator(_System system)
+                    {
+                        _system = system;
+                    }
+
                     /// <summary>
                     /// Actual Value of the Propertie.
                     /// </summary>
@@ -354,28 +368,48 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     {
                         get
                         {
-                            throw new NotImplementedException();
+                            if (_Value == null)
+                            {
+                                switch (_system._configuration._chroma66205.SendCommand("SYST:TRAN:SEP?", true))
+                                {
+                                    case ",":
+                                        return AllowedValue.Comma;
+                                    case ";":
+                                        return AllowedValue.Semicolon;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
+                            }
+                            else
+                            {
+                                return _Value;
+                            }
                         }
                         set
                         {
-                            throw new NotImplementedException();
-                        }
-                    }
-
-                    /// <summary>
-                    /// Converts the AllowedValue of the TransmitSeperator to it´s respective String representation
-                    /// </summary>
-                    /// <returns>For Comma = "," for Semicolon = ";"</returns>
-                    public new string ToString()
-                    {
-                        switch (this.Value.ToString())
-                        {
-                            case "0":
-                                return ",";
-                            case "1":
-                                return ";";
-                            default:
-                                throw new ArgumentOutOfRangeException();
+                            
+                            switch (value.ToString())
+                            {
+                                case ",":
+                                    _system._configuration._chroma66205.SendCommand($"SYST:TRAN:SEP ON", true);
+                                    break;
+                                case ";":
+                                    _system._configuration._chroma66205.SendCommand($"SYST:TRAN:SEP OFF", true);
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            switch (_system._configuration._chroma66205.SendCommand("SYST:TRAN:SEP?", true))
+                            {
+                                case ",":
+                                    _Value = AllowedValue.Comma;
+                                    break;
+                                case ";":
+                                    _Value = AllowedValue.Semicolon;
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
                     }
 
@@ -386,9 +420,21 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     {
                         private readonly string _value;
 
+                        /// <summary>
+                        /// Converts the AllowedValue of the TransmitSeperator to it´s respective String representation
+                        /// </summary>
+                        /// <returns>For Comma = "," for Semicolon = ";"</returns>
                         public new string ToString()
                         {
-                            return _value;
+                            switch (_value)
+                            {
+                                case "0":
+                                    return ",";
+                                case "1":
+                                    return ";";
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
 
                         private AllowedValue(string value)
@@ -429,32 +475,27 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
                     }
 
                     /// <summary>
-                    /// Converts the AllowedValue of the TransmitTerminator to it´s respective String representation
-                    /// </summary>
-                    /// <returns>For LineFeed = "\n" for LF+CR = "\n\r"</returns>
-                    public new string ToString()
-                    {
-                        switch (this.Value.ToString())
-                        {
-                            case "0":
-                                return "\n";
-                            case "1":
-                                return "\n\r";
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-
-                    /// <summary>
                     /// Allowed values for the Propertie.
                     /// </summary>
                     public class AllowedValue
                     {
                         private readonly string _value;
 
+                        /// <summary>
+                        /// Converts the AllowedValue of the TransmitTerminator to it´s respective String representation
+                        /// </summary>
+                        /// <returns>For LineFeed = "\n" for LF+CR = "\n\r"</returns>
                         public new string ToString()
                         {
-                            return _value;
+                            switch (_value)
+                            {
+                                case "0":
+                                    return "\n";
+                                case "1":
+                                    return "\n\r";
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
 
                         private AllowedValue(string value)
@@ -499,6 +540,13 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
         /// </summary>
         public struct _Status
         {
+            Chroma66205 _chroma66205;
+
+            public _Status(Chroma66205 chroma66205)
+            {
+                _chroma66205 = chroma66205;
+            }
+
             /// <summary>
             /// This Command queries the Error Status of the Instrument.
             /// </summary>
@@ -506,7 +554,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return _chroma66205.SendCommand("SYST:ERR?", true);
                 }
             }
 
@@ -517,7 +565,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return _chroma66205.SendCommand("*IDN?", true);
                 }
             }
 
@@ -528,7 +576,7 @@ namespace MeasurementControlCLI.Instruments.PowerMeters.Chroma66205
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return Convert.ToDouble(_chroma66205.SendCommand("SYST:VER?", true));
                 }
             }
         }
