@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MeasurementControlCLI.Instruments.Exceptions
+namespace MeasurementControlCLI.Exceptions
 {
     [Serializable]
     public class CommunicationException : Exception

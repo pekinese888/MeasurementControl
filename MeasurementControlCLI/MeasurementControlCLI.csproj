@@ -54,16 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Instruments\Instrument.cs" />
-    <Compile Include="Instruments\PowerMeters\Chroma66205\Chroma66205.cs" />
-    <Compile Include="Instruments\PowerMeters\Chroma66205\MeasurementParameter.cs" />
-    <Compile Include="Instruments\PowerMeters\MeasurementParameter.cs" />
-    <Compile Include="Instruments\PowerMeters\PowerMeter.cs" />
-    <Compile Include="Instruments\Exceptions\CannotConnectInstrumentException.cs" />
-    <Compile Include="Instruments\Exceptions\CommunicationException.cs" />
-    <Compile Include="Instruments\GenerationParameter.cs" />
-    <Compile Include="Instruments\MeasurementParameter.cs" />
-    <Compile Include="Instruments\Exceptions\WrongInstrumentException.cs" />
+    <Compile Include="Instruments\Chroma66205\Configuration\RestoreConfig_AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\Configuration\SaveConfig_AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\Fetch_AllowedValue.cs" />
+    <Compile Include="Helper\AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\Chroma66205.cs" />
+    <Compile Include="Instruments\Chroma66205\InternalConfiguration\TransmitTerminator_AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\InternalConfiguration\TransmitSeperator_AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\InternalConfiguration\Header_AllowedValue.cs" />
+    <Compile Include="Instruments\Chroma66205\Measure_AllowedValue.cs" />
+    <Compile Include="Exceptions\CannotConnectInstrumentException.cs" />
+    <Compile Include="Exceptions\CommunicationException.cs" />
+    <Compile Include="Exceptions\WrongInstrumentException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,6 +76,8 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Measurements\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
