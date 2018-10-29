@@ -411,26 +411,6 @@ namespace MeasurementControlCLI.Instruments.Chroma66205
                         }
                     }
                 }
-
-
-                /// <summary>
-                /// Allowed values for the Propertie.
-                /// </summary>
-                public class AllowedValue
-                {
-                    private readonly string _value;
-
-                    public new string ToString()
-                    {
-                        return _value;
-                    }
-
-                    private AllowedValue(string value)
-                    {
-                        _value = value;
-                    }
-
-                }
             }
             public _Header Header { get; }
 
@@ -594,6 +574,726 @@ namespace MeasurementControlCLI.Instruments.Chroma66205
             {
                 throw new NotImplementedException();
             }
+
+            /// <summary>
+            /// This command sets the voltage range of measure.
+            /// </summary>
+            public class _VoltageRange
+            {
+                private _ExternalConfiguration _internalConfiguration;
+
+                public _VoltageRange(_ExternalConfiguration internalConfiguration)
+                {
+                    _internalConfiguration = internalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.VoltageRange_AllowedValue _Value = null;
+                public Configuration.VoltageRange_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("VOLT:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"VOLT:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("VOLT:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.VoltageRange_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _VoltageRange VoltageRange { get; }
+
+            /// <summary>
+            /// This command sets the current range of measure.
+            /// </summary>
+            public class _CurrentRange
+            {
+                private _ExternalConfiguration _internalConfiguration;
+
+                public _CurrentRange(_ExternalConfiguration internalConfiguration)
+                {
+                    _internalConfiguration = internalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.CurrentRange_AllowedValue _Value = null;
+                public Configuration.CurrentRange_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.CurrentRange_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _CurrentRange CurrentRange { get; }
+
+            /// <summary>
+            /// This command sets the mode of measurement.
+            /// </summary>
+            public class _Mode
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _Mode(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.Mode_AllowedValue _Value = null;
+                public Configuration.Mode_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.Mode_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.Mode_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _Mode Mode { get; }
+
+            /// <summary>
+            /// This command sets the number of measurements over which the average calculation is to be performed.
+            /// </summary>
+            public class _Average
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _Average(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.Average_AllowedValue _Value = null;
+                public Configuration.Average_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.Average_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.Average_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _Average Average { get; }
+
+            /// <summary>
+            /// This command sets the time of measure in second over which the data calculation is to be performed.
+            /// </summary>
+            public class _Update
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _Update(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.Update_AllowedValue _Value = null;
+                public Configuration.Update_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.Update_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.Update_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _Update Update { get; }
+
+            /// <summary>
+            /// This command is used to select bandwidth of digital low pass filter on input signal path.
+            /// </summary>
+            public class _FilterLine
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _FilterLine(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.FilterLine_AllowedValue _Value = null;
+                public Configuration.FilterLine_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.FilterLine_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _FilterLine FilterLine { get; }
+
+            /// <summary>
+            /// This command is used to switch low pass filter on the path of frequency detect.
+            /// </summary>
+            public class _FilterFrequency
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _FilterFrequency(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.FilterFrequency_AllowedValue _Value = null;
+                public Configuration.FilterFrequency_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.FilterFrequency_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _FilterFrequency FilterFrequency { get; }
+
+            /// <summary>
+            /// This command is used to select the source of frequency detect.
+            /// </summary>
+            public class _SyncSource
+            {
+                private _ExternalConfiguration _ExternalConfiguration;
+
+                public _SyncSource(_ExternalConfiguration externalConfiguration)
+                {
+                    _ExternalConfiguration = externalConfiguration;
+                }
+
+                /// <summary>
+                /// Actual Value of the Propertie.
+                /// </summary>
+                private Configuration.SyncSource_AllowedValue _Value = null;
+                public Configuration.SyncSource_AllowedValue Value
+                {
+                    get
+                    {
+                        if (_Value == null)
+                        {
+                            switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                            {
+                                case "AUTO":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.AUTO;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.AUTO;
+                                case "V600":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V600;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V600;
+                                case "V300":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V300;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V300;
+                                case "V150":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V150;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V150;
+                                case "V60":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V60;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V60;
+                                case "V30":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V30;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V30;
+                                case "V15":
+                                    _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V15;
+                                    return Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V15;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        else
+                        {
+                            return _Value;
+                        }
+                    }
+                    set
+                    {
+                        _internalConfiguration._chroma66205.SendCommand($"CURR:RANG {value.MessageBasedSessionRepresentation}", true);
+                        switch (_internalConfiguration._chroma66205.SendCommand("CURR:RANG?", true))
+                        {
+                            case "AUTO":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.AUTO;
+                                break;
+                            case "V600":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V600;
+                                break;
+                            case "V300":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V300;
+                                break;
+                            case "V150":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V150;
+                                break;
+                            case "V60":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V60;
+                                break;
+                            case "V30":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V30;
+                                break;
+                            case "V15":
+                                _Value = Instruments.Chroma66205.Configuration.SyncSource_AllowedValue.V15;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+
+            }
+            public _SyncSource SyncSource { get; }
 
         }
         public _ExternalConfiguration Configuration { get; }
